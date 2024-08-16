@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Side - Queuing System</title>
+    <link rel="stylesheet" href="../CSS/user-side.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-container">
+            <img src="../img/makerlab.jpg" alt="Makerlab Logo" class="logo">
+            <div>
+                <h1>Makerlab Electronics</h1>
+                <h2>Jassen Harris Industries Corporation</h2>
+            </div>
+        </div>
+    </div>
+    
+
+<div class="container">
+    <div class="column now-serving">
+        <h2>Now Serving</h2>
+        <div class="category">
+            <h3>Sales</h3>
+            <div class="counter" id="sales-counter1">Counter 1: 0</div>
+            <div class="counter" id="sales-counter2">Counter 2: 0</div>
+        </div>
+        <div class="category">
+            <h3>Delivery</h3>
+            <div class="counter" id="delivery-counter1">Counter 1: 0</div>
+            <div class="counter" id="delivery-counter2">Counter 2: 0</div>
+            <div class="counter" id="delivery-counter3">Counter 3: 0</div>
+        </div>
+        <div class="category">
+            <h3>Consultation</h3>
+            <div class="counter" id="consultation-counter1">Counter 1: 0</div>
+        </div>
+    </div>
+    
+    <div class="column now-claiming">
+        <h2>Now Claiming</h2>
+        <div id="claiming-section">
+            <p>No claims currently</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateCounters() {
+        const counter1Sales = localStorage.getItem('counter1Serving') || '0';
+        const counter2Sales = localStorage.getItem('counter2Serving') || '0';
+        const counter1Delivery = localStorage.getItem('counter1ServingDelivery') || '0';
+        const counter2Delivery = localStorage.getItem('counter2ServingDelivery') || '0';
+        const counter3Delivery = localStorage.getItem('counter3ServingDelivery') || '0';
+        const counter1Consultation = localStorage.getItem('consultationServing') || '0';
+
+        document.getElementById('sales-counter1').textContent = `Counter 1: ${counter1Sales}`;
+        document.getElementById('sales-counter2').textContent = `Counter 2: ${counter2Sales}`;
+        document.getElementById('delivery-counter1').textContent = `Counter 1: ${counter1Delivery}`;
+        document.getElementById('delivery-counter2').textContent = `Counter 2: ${counter2Delivery}`;
+        document.getElementById('delivery-counter3').textContent = `Counter 3: ${counter3Delivery}`;
+        document.getElementById('consultation-counter1').textContent = `Counter 1: ${counter1Consultation}`;
+    }
+
+    function updateClaimingSection() {
+        let claimingQueueSales = JSON.parse(localStorage.getItem('claimingQueue')) || [];
+        let claimingQueueDelivery = JSON.parse(localStorage.getItem('claimingQueueDelivery')) || [];
+        let claimingQueueConsultation = JSON.parse(localStorage.getItem('claimingQueueConsultation')) || [];
+        const claimingSection = document.getElementById('claiming-section');
+        claimingSection.innerHTML = '';
+
+        let allClaimingNumbers = [...claimingQueueSales, ...claimingQueueDelivery, ...claimingQueueConsultation];
+
+        if (allClaimingNumbers.length === 0) {
+            claimingSection.innerHTML = '<p>No claims currently</p>';
+        } else {
+            allClaimingNumbers.forEach(function(number) {
+                const claimItem = document.createElement('p');
+                claimItem.textContent = number;
+                claimingSection.appendChild(claimItem);
+            });
+        }
+    }
+
+    window.onload = function() {
+        updateCounters();
+        updateClaimingSection();
+    };
+
+    window.addEventListener('storage', function(event) {
+        if (event.key === 'counter1Serving' || event.key === 'counter2Serving' ||
+            event.key === 'counter1ServingDelivery' || event.key === 'counter2ServingDelivery' ||
+            event.key === 'counter3ServingDelivery' || event.key === 'consultationServing') {
+            updateCounters();
+        }
+        if (event.key === 'claimingUpdated' || event.key === 'claimingUpdatedDelivery' || event.key === 'claimingUpdatedConsultation') {
+            updateClaimingSection();
+        }
+    });
+</script>
+
+</body>
+</html>

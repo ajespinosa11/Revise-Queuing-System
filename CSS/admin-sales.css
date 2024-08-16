@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.column {
+    width: 45%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.number-display {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+    padding: 10px;
+    background-color: #eaeaea;
+    border-radius: 5px;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 25px;
+    margin: 10px 0;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+.order-list {
+    min-height: 100px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-item span {
+    flex-grow: 1;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.order-item button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-item button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.order-item button:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.queue {
+    width: 90%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.queue h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+#queue-list {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}

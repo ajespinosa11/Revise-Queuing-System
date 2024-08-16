@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reception Area - Queuing System</title>
+    <link rel="stylesheet" href="../CSS/reception.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="column">
+        <div id="sales-number" class="number-display">MLS0000</div>
+        <h2>Sales</h2>
+        <button class="button" onclick="generateNumber('sales')">Generate Number</button>
+        <button class="button" onclick="clearQueue('sales')">Clear Queue</button>
+        <button class="button" onclick="printNumber('sales')">Print Number</button>
+    </div>
+    
+    <div class="column">
+        <div id="delivery-number" class="number-display">MLD0000</div>
+        <h2>Delivery</h2>
+        <button class="button" onclick="generateNumber('delivery')">Generate Number</button>
+        <button class="button" onclick="clearQueue('delivery')">Clear Queue</button>
+        <button class="button" onclick="printNumber('delivery')">Print Number</button>
+    </div>
+    
+    <div class="column">
+        <div id="consultation-number" class="number-display">MLC0000</div>
+        <h2>Consultation</h2>
+        <button class="button" onclick="generateNumber('consultation')">Generate Number</button>
+        <button class="button" onclick="clearQueue('consultation')">Clear Queue</button>
+        <button class="button" onclick="printNumber('consultation')">Print Number</button>
+    </div>
+</div>
+
+<script>
+    function generateNumber(type) {
+        const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit random number
+        let prefix;
+        
+        if (type === 'sales') {
+            prefix = 'MLS';
+        } else if (type === 'delivery') {
+            prefix = 'MLD';
+        } else {
+            prefix = 'MLC'; // For consultation
+        }
+        
+        const numberDisplay = document.getElementById(`${type}-number`);
+        const fullNumber = prefix + randomNumber;
+        numberDisplay.textContent = fullNumber;
+
+        if (type === 'sales') {
+            saveToQueue('salesQueue', fullNumber);
+        } else if (type === 'delivery') {
+            saveToQueue('deliveryQueue', fullNumber);
+        } else {
+            saveToQueue('consultationQueue', fullNumber);
+        }
+    }
+
+    function saveToQueue(queueName, number) {
+        let queue = JSON.parse(localStorage.getItem(queueName)) || [];
+        queue.push(number);
+        localStorage.setItem(queueName, JSON.stringify(queue));
+        localStorage.setItem(queueName + 'Updated', Date.now());  // Notify other tabs/pages
+    }
+
+    function clearQueue(type) {
+        const queueName = type + 'Queue';
+        localStorage.removeItem(queueName);
+        localStorage.setItem(queueName + 'Updated', Date.now());  // Notify other tabs/pages
+        updateQueueDisplay(type);
+    }
+
+    function updateQueueDisplay(type) {
+        document.getElementById(`${type}-number`).textContent = type === 'sales' ? 'MLS0000' : type === 'delivery' ? 'MLD0000' : 'MLC0000';
+    }
+
+    function printNumber(type) {
+        const numberDisplay = document.getElementById(`${type}-number`);
+        const number = numberDisplay.textContent;
+        window.print();
+    }
+</script>
+
+</body>
+</html>
