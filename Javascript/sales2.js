@@ -7,7 +7,7 @@ function nextNumber() {
 
         localStorage.setItem('salesQueue', JSON.stringify(queue)); // Update the queue in localStorage
         localStorage.setItem('counter2Serving', nextNumber); // Update the number being served
-        localStorage.setItem('queueUpdated', Date.now());  // Notify other tabs/pages
+        localStorage.setItem('salesQueueUpdated', Date.now());  // Notify other tabs/pages
         addOrderToProcess(nextNumber);
         updateQueueDisplay(queue);
     } else {
@@ -19,7 +19,7 @@ function resetNumber() {
     document.getElementById('counter2-number').textContent = '0';
     document.getElementById('counter2-orders').innerHTML = '<p>No orders currently.</p>';
     localStorage.setItem('counter2Serving', '0'); // Reset the number in localStorage
-    localStorage.setItem('queueUpdated', Date.now());  // Notify other tabs/pages
+    localStorage.setItem('salesQueueUpdated', Date.now());  // Notify other tabs/pages
 }
 
 function addOrderToProcess(number) {
@@ -80,7 +80,7 @@ function loadQueue() {
 window.onload = loadQueue;
 
 window.addEventListener('storage', function(event) {
-    if (event.key === 'queueUpdated') {
+    if (event.key === 'salesQueueUpdated') {
         loadQueue();
     }
 });

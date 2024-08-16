@@ -80,7 +80,7 @@ function loadQueue() {
 window.onload = loadQueue;
 
 window.addEventListener('storage', function(event) {
-    if (event.key === 'queueUpdated') {
+    if (event.key === 'salesQueueUpdated') {
         loadQueue();
     }
 });
