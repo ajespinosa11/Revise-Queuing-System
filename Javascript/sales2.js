@@ -10,6 +10,7 @@ function nextNumber() {
         localStorage.setItem('salesQueueUpdated', Date.now());  // Notify other tabs/pages
         addOrderToProcess(nextNumber);
         updateQueueDisplay(queue);
+        updateResetButtonState();
     } else {
         alert("No more numbers in the queue.");
     }
@@ -20,6 +21,7 @@ function resetNumber() {
     document.getElementById('counter2-orders').innerHTML = '<p>No orders currently.</p>';
     localStorage.setItem('counter2Serving', '0'); // Reset the number in localStorage
     localStorage.setItem('salesQueueUpdated', Date.now());  // Notify other tabs/pages
+    updateResetButtonState();
 }
 
 function addOrderToProcess(number) {
@@ -32,6 +34,7 @@ function addOrderToProcess(number) {
         <button onclick="requestComplete('${number}', this)" disabled>Request Complete</button>
     `;
     ordersElement.appendChild(newOrder);
+    updateResetButtonState();
 }
 
 function requestReady(number, button) {
@@ -55,6 +58,7 @@ function requestComplete(number, button) {
     localStorage.setItem('claimingUpdated', Date.now());  // Notify other tabs/pages
 
     alert("Request is complete for Order " + number);
+    updateResetButtonState();
 }
 
 function updateQueueDisplay(queue) {
@@ -75,6 +79,17 @@ function updateQueueDisplay(queue) {
 function loadQueue() {
     let queue = JSON.parse(localStorage.getItem('salesQueue')) || [];
     updateQueueDisplay(queue);
+    updateResetButtonState();
+}
+
+function updateResetButtonState() {
+    const ordersElement = document.getElementById('counter2-orders');
+    const resetButton = document.getElementById('resetButton');
+    if (ordersElement.children.length === 0 || (ordersElement.children.length === 1 && ordersElement.children[0].tagName === 'P')) {
+        resetButton.disabled = false;
+    } else {
+        resetButton.disabled = true;
+    }
 }
 
 window.onload = loadQueue;
